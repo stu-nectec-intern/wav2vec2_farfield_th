@@ -53,6 +53,9 @@ def th_words_tokenize(batch):
 
 4. **Data Augmentation simulating Farfiled:**
    - Convolve with selected Room impulse response and add noise utilizing the function from torchaudio from this [Documentation](https://pytorch.org/audio/stable/tutorials/audio_data_augmentation_tutorial.html).
+
+![Image Alt Text](./images/rir.png)
+
    - Source of the Noise is from [Musan](https://www.openslr.org/17/) and Room Impulse Response (RIR) from [Butspeech](https://speech.fit.vutbr.cz/software/but-speech-fit-reverb-database).
 
 Happy ASR development with `wav2vec2_farfield_th`! 🎉
