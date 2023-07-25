@@ -55,7 +55,7 @@ class DataCollatorCTCWithPadding:
                 pad_to_multiple_of=self.pad_to_multiple_of_labels,
                 return_tensors="pt",
             )
-
+        
         labels = labels_batch["input_ids"].masked_fill(labels_batch.attention_mask.ne(1), -100)
 
         batch["labels"] = labels
@@ -66,6 +66,9 @@ def compute_metrics(pred):
     pred_ids = np.argmax(pred_logits, axis=-1)
     pred.label_ids[pred.label_ids == -100] = processor.tokenizer.pad_token_id
     pred_str = processor.batch_decode(pred_ids)
+    vocab_dict = processor.tokenizer.get_vocab()
+    token_zero = [token for token, id in vocab_dict.items() if id == 0][0]
+    pred_str = [s[:-1].strip() if s and s[-1] == token_zero else s for s in pred_str]
     label_str = processor.batch_decode(pred.label_ids, group_tokens=False)
     wer_metric = evaluate.load("metric/wer.py")
     wer = wer_metric.compute(predictions=pred_str, references=label_str)
@@ -93,7 +96,7 @@ def main():
 #--------------------------------------------------------------------------------------------------------
 
     training_args = TrainingArguments(
-        output_dir="wav2vec2-xlsr53-TH-cmv-ckp3/",
+        output_dir="wav2vec2-xlsr53-TH-cmv-ckp4/",
         group_by_length=True,
         per_device_train_batch_size=per_device_train_batch_size,
         per_device_eval_batch_size=8,
@@ -121,7 +124,6 @@ def main():
         mask_time_prob=0.05,
         layerdrop=0.1,
         ctc_loss_reduction="mean",
-        gradient_checkpointing=True,
         pad_token_id=processor.tokenizer.pad_token_id,
         vocab_size=len(processor.tokenizer)
     )
