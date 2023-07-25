@@ -63,6 +63,8 @@ def th_words_tokenize(batch):
 
    - Source of the Noise is from [Musan](https://www.openslr.org/17/) and Room Impulse Response (RIR) from [Butspeech](https://speech.fit.vutbr.cz/software/but-speech-fit-reverb-database).
 
+### When save model for continue training delete the best model and best metric if you facing error while continue training
+
 Happy ASR development with `wav2vec2_farfield_th`! 🎉
 
 
