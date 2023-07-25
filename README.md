@@ -12,6 +12,9 @@ To effectively utilize this model, follow these steps:
 
 2. **Fine-tune Wav2Vec2 with the Prepared Dataset:**
    - Dataset that we use in this repository is the combination of [Common Voice 13](https://commonvoice.mozilla.org/en/datasets), [Gowajee](https://github.com/ekapolc/gowajee_corpus), and [ASR Thai elderly dataset](https://github.com/VISAI-DATAWOW/Thai-Elderly-Speech-dataset/releases/tag/v1.0.0).
+  
+![distribution](./components/distribution.jpg)
+
    - To prepare the data for fine-tuning, follow these steps:
      - Clean special characters from the sentences.
      - Replace "เเ" with "แ".
@@ -51,10 +54,12 @@ def th_words_tokenize(batch):
    - Implement the [Cosine scheduler with restart](https://huggingface.co/docs/transformers/v4.30.0/en/main_classes/optimizer_schedules#transformers.get_linear_schedule_with_warmup.num_training_steps) to optimize the training process.
    - Check out the [Boosting Wav2Vec2 with n-grams in 🤗 Transformers](https://huggingface.co/blog/wav2vec2-with-ngram) blog post to explore n-gram techniques for further performance improvements.
 
+![train](./components/output3.png)
+
 4. **Data Augmentation simulating Farfiled:**
    - Convolve with selected Room impulse response and add noise utilizing the function from torchaudio from this [Documentation](https://pytorch.org/audio/stable/tutorials/audio_data_augmentation_tutorial.html).
 
-![Image Alt Text](./components/rir.png)
+![rir](./components/rir.png)
 
    - Source of the Noise is from [Musan](https://www.openslr.org/17/) and Room Impulse Response (RIR) from [Butspeech](https://speech.fit.vutbr.cz/software/but-speech-fit-reverb-database).
 
